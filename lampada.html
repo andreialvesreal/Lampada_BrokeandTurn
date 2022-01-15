@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Lampada</title>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+	</style>
+</head>
+<body id="corpo">
+
+	<div>
+		<h1 id="titulo"> Lampada </h1> <h2> Broke and Turn </h2>
+		
+		<p id="subtitulo"> Ligue a lampada para iniciar!!!</p>
+
+		<img src="lightOff.png" id="light">
+
+		<br>
+
+		<button onclick="LigarDesligar()" id="btnOnOff">
+			<p class="btn" id="botaoLigaDesliga"> Ligar</p>
+		</button>
+
+		<button onclick="Quebrar()">
+			<p class="btn"> Quebrar</p>
+		</button>
+
+		<button onclick="Consertar()">
+			<p class="btn" id="botaoConserte"> Consertar</p>
+		</button>
+	</div>
+
+	<audio controls style="display: none;" id="som-ligou">
+	  <source src="ligou.mp3" type="audio/mpeg">
+	</audio>
+
+	<audio controls style="display: none;" id="som-desligou">
+	  <source src="desligar.mp3" type="audio/mpeg">
+	</audio>
+
+	<audio controls style="display: none;" id="som-quebrou">
+	  <source src="quebrar.mp3" type="audio/mpeg">
+	</audio>
+
+	<audio controls style="display: none;" id="som-consertou">
+	  <source src="consertou.mp3" type="audio/mpeg">
+	</audio>
+
+	<audio controls style="display: none;" id="som-alerta">
+	  <source src="alerta-som.mp3" type="audio/mpeg">
+	</audio>
+
+	<audio controls style="display: none;" id="som-fundo">
+	  <source src="jazz.mp3" type="audio/mpeg">
+	</audio>
+
+	<audio controls style="display: none;" id="som-feliz">
+	  <source src="yeah.mp3" type="audio/mpeg">
+	</audio>
+
+	<audio controls style="display: none;" id="som-triste">
+	  <source src="aaah.mp3" type="audio/mpeg">
+	</audio>
+
+
+	<script type="text/javascript">
+
+		var estado = "desligado"
+
+		function LigarDesligar(){
+
+			if(estado == "desligado"){
+				estado = "ligado"
+				document.getElementById('som-ligou').play();
+				document.getElementById('som-fundo').play();
+				document.getElementById('som-triste').pause();
+				document.getElementById('som-feliz').play();
+				document.getElementById('light').src="lightOn.png"
+				document.getElementById('titulo').style.color="yellow"
+				document.getElementById('botaoLigaDesliga').innerHTML = "Desliga"
+				document.getElementById('subtitulo').style.display = "none"
+				document.getElementById('corpo').style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url(background.jpg)"
+
+			} else {
+				if (estado == "ligado"){
+					document.getElementById('som-desligou').play();
+					document.getElementById('som-triste').pause();
+					document.getElementById('som-fundo').pause();
+					document.getElementById('som-feliz').pause();
+					document.getElementById('light').src="lightOff.png"
+					document.getElementById('titulo').style.color="white"
+					document.getElementById('botaoLigaDesliga').innerHTML = "Ligar"
+					document.getElementById('corpo').style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.8)), url(background.jpg)"
+					estado = "desligado"
+				}
+			}
+		}
+
+
+		function Quebrar(){
+			estado = "quebrado"
+			var estadodoBotaoLigaDesliga = document.getElementById('btnOnOff').style.display
+			document.getElementById('som-quebrou').play();
+			document.getElementById('som-fundo').pause();
+			document.getElementById('som-triste').play();
+			document.getElementById('som-feliz').pause();
+			if(estado == "quebrado"){
+				document.getElementById('btnOnOff').style.display = "none";
+			}
+
+			if (estadodoBotaoLigaDesliga == "none"){
+				alert("Quebrado! Conserte!")
+				document.getElementById('som-alerta').play();
+				document.getElementById('botaoConserte').innerHTML += "<img src='alert.png' style='width: 15px; margin: 0px; padding: 0px; margin-left: 10px;'/>"
+			}
+
+			document.getElementById('light').src="lightBroken.png"
+			document.getElementById('titulo').style.color="white"	
+		}
+
+
+
+		function Consertar(){
+			if (estado == "quebrado"){
+				estado = "desligado";
+				document.getElementById('som-alerta').pause();
+				document.getElementById('som-consertou').play();
+				document.getElementById('som-feliz').play();
+				document.getElementById('som-triste').pause();
+				document.getElementById('light').src="lightOff.png"
+				document.getElementById('botaoConserte').innerHTML = "Consertar"
+				document.getElementById('btnOnOff').style.display = ""
+				document.getElementById('botaoLigaDesliga').innerHTML = "Ligar"
+			}
+
+			
+		}
+
+	</script>
+
+
+	<style type="text/css">
+		body{
+			background-image: linear-gradient(
+		      rgba(0, 0, 0, 0.9), 
+		      rgba(0, 0, 0, 0.8)
+		    ),
+    url('background.jpg');
+			background-size: cover;
+			background-attachment: fixed;
+			background-position: center;
+		}
+
+		h1,h2,p{
+			color: #fff;
+			font-family: 'Roboto', sans-serif;
+			cursor: context-menu;
+		}
+
+		button{
+			background-color: transparent;
+			border: solid;
+			border-width: 1px;
+			border-color: white;
+			border-radius: 10px;
+			width: 150px;
+			cursor: grab;
+		}
+
+		button:hover{
+			background-color: #000833;
+		}
+
+		.btn{
+			cursor: grab;
+		}
+
+		div{
+			text-align: center;
+		}
+
+
+
+
+	</style>
+
+</body>
+</html>
